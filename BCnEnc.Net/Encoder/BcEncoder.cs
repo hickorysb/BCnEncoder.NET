@@ -11,6 +11,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using BCnEncoder.Encoder.Bptc;
+using BCnEncoder.Encoder.Options;
+using BCnEncoder.Shared;
+using BCnEncoder.Shared.ImageFiles;
+using CommunityToolkit.HighPerformance;
 
 namespace BCnEncoder.Encoder
 {

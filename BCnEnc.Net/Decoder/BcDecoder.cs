@@ -10,6 +10,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using BCnEncoder.Shared.ImageFiles;
+using CommunityToolkit.HighPerformance;
 
 namespace BCnEncoder.Decoder
 {

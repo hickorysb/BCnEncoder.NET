@@ -3,9 +3,13 @@ using BCnEncoder.Encoder;
 using BCnEncoder.ImageSharp;
 using BCnEncoder.Shared;
 using BCnEncoder.Shared.ImageFiles;
+<<<<<<< HEAD
 
 using Microsoft.Toolkit.HighPerformance;
 
+=======
+using CommunityToolkit.HighPerformance;
+>>>>>>> master
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
