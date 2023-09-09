@@ -1,5 +1,9 @@
 using BCnEncoder.Decoder.Options;
 using BCnEncoder.Shared;
+using BCnEncoder.Shared.ImageFiles;
+
+using Microsoft.Toolkit.HighPerformance;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -7,7 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using BCnEncoder.Shared.ImageFiles;
-using Microsoft.Toolkit.HighPerformance;
+using CommunityToolkit.HighPerformance;
 
 namespace BCnEncoder.Decoder
 {
@@ -1557,6 +1561,10 @@ namespace BCnEncoder.Decoder
 				case CompressionFormat.Rgb:
 				case CompressionFormat.Rgba:
 				case CompressionFormat.Bgra:
+				case CompressionFormat.Bgr:
+				case CompressionFormat.B5G6R5:
+				case CompressionFormat.B5G5R5A1:
+				case CompressionFormat.B4G4R4A4:
 					return true;
 
 				default:
@@ -1670,6 +1678,18 @@ namespace BCnEncoder.Decoder
 				case CompressionFormat.Rgba:
 					return new RawRgbaDecoder();
 
+				case CompressionFormat.B4G4R4A4:
+					return new RawB4G4R4A4Decoder();
+
+				case CompressionFormat.B5G5R5A1:
+					return new RawB5G5R5A1Decoder();
+
+				case CompressionFormat.B5G6R5:
+					return new RawB5G6R5Decoder();
+
+				case CompressionFormat.Bgr:
+					return new RawBgrDecoder();
+
 				case CompressionFormat.Bgra:
 					return new RawBgraDecoder();
 
@@ -1736,6 +1756,12 @@ namespace BCnEncoder.Decoder
 				case CompressionFormat.Rgba:
 					return 4;
 
+				case CompressionFormat.B4G4R4A4:
+				case CompressionFormat.B5G5R5A1:
+				case CompressionFormat.B5G6R5:
+					return 2;
+
+				case CompressionFormat.Bgr:
 				case CompressionFormat.Bgra:
 					return 4;
 
@@ -1773,7 +1799,7 @@ namespace BCnEncoder.Decoder
 
 				case CompressionFormat.Unknown:
 					return 0;
-				
+
 				default:
 					throw new ArgumentOutOfRangeException(nameof(format), format, null);
 			}
@@ -1863,6 +1889,18 @@ namespace BCnEncoder.Decoder
 				case DxgiFormat.DxgiFormatR8G8B8A8Unorm:
 					return CompressionFormat.Rgba;
 
+				case DxgiFormat.DxgiFormatB4G4R4A4Unorm:
+					return CompressionFormat.B4G4R4A4;
+
+				case DxgiFormat.DxgiFormatB5G5R5A1Unorm:
+					return CompressionFormat.B5G5R5A1;
+
+				case DxgiFormat.DxgiFormatB5G6R5Unorm:
+					return CompressionFormat.B5G6R5;
+
+				case DxgiFormat.DxgiFormatB8G8R8X8Unorm:
+					return CompressionFormat.Bgr;
+
 				case DxgiFormat.DxgiFormatB8G8R8A8Unorm:
 					return CompressionFormat.Bgra;
 
@@ -1931,6 +1969,9 @@ namespace BCnEncoder.Decoder
 					return pixelWidth * pixelHeight;
 
 				case CompressionFormat.Rg:
+				case CompressionFormat.B5G6R5:
+				case CompressionFormat.B5G5R5A1:
+				case CompressionFormat.B4G4R4A4:
 					return 2 * pixelWidth * pixelHeight;
 
 				case CompressionFormat.Rgb:
@@ -1938,6 +1979,7 @@ namespace BCnEncoder.Decoder
 
 				case CompressionFormat.Rgba:
 				case CompressionFormat.Bgra:
+				case CompressionFormat.Bgr:
 					return 4 * pixelWidth * pixelHeight;
 
 				case CompressionFormat.Bc1:

@@ -1,16 +1,24 @@
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using BCnEncoder.Decoder;
 using BCnEncoder.Encoder;
 using BCnEncoder.ImageSharp;
 using BCnEncoder.Shared;
 using BCnEncoder.Shared.ImageFiles;
+<<<<<<< HEAD
+
 using Microsoft.Toolkit.HighPerformance;
+
+=======
+using CommunityToolkit.HighPerformance;
+>>>>>>> master
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -30,7 +38,7 @@ namespace BCnEncTests.Support
 
 		public static void AssertPixelsEqual(Span<ColorRgbFloat> originalPixels, Span<ColorRgbFloat> pixels, CompressionQuality quality, ITestOutputHelper output = null)
 		{
-			var rmse = ImageQuality.CalculateLogRMSE(originalPixels,pixels);
+			var rmse = ImageQuality.CalculateLogRMSE(originalPixels, pixels);
 			AssertRMSE(rmse, quality, output);
 		}
 
@@ -89,7 +97,7 @@ namespace BCnEncTests.Support
 		public static void ExecuteDdsReadingTest(DdsFile file, DxgiFormat format, string outputFile, bool assertAlpha = false)
 		{
 			Assert.Equal(format, file.header.ddsPixelFormat.DxgiFormat);
-			Assert.Equal(file.header.dwMipMapCount, (uint)file.Faces[0].MipMaps.Length);
+			Assert.Equal(file.header.MipMapCount, (uint)file.Faces[0].MipMaps.Length);
 
 			var decoder = new BcDecoder();
 			decoder.InputOptions.DdsBc1ExpectAlpha = assertAlpha;
@@ -151,7 +159,7 @@ namespace BCnEncTests.Support
 			var decoder = new BcDecoder()
 			{
 			};
-			
+
 			var decoded = decoder.DecodeHdr(ktx);
 
 			return ImageQuality.CalculateLogRMSE(original.pixels, decoded);
@@ -192,9 +200,9 @@ namespace BCnEncTests.Support
 
 		private static float CalculatePSNR(Image<Rgba32> original, Image<Rgba32> decoded, bool countAlpha = true)
 		{
-			var pixels  = GetSinglePixelArrayAsColors(original);
+			var pixels = GetSinglePixelArrayAsColors(original);
 			var pixels2 = GetSinglePixelArrayAsColors(decoded);
-			
+
 			return ImageQuality.PeakSignalToNoiseRatio(pixels, pixels2, countAlpha);
 		}
 
